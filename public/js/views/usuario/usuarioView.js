@@ -3,11 +3,10 @@ define([
 	'underscore',
 	'backbone',
 	'text!templates/usuario/cadastro.html',
-	'jStore',
 	'utils',
 	'models/usuario/usuarioModel',
 	'enums/tipoMensagem'
-	], function($, _, Backbone, Template, jStore, Utils, UsuarioModel, TipoMsg) {
+	], function($, _, Backbone, Template, Utils, UsuarioModel, TipoMsg) {
 	var Login = Backbone.View.extend({
 		el: '.page',
 
@@ -18,7 +17,7 @@ define([
 		initialize: function() {
 			var that = this;
 
-			this.model.on("error", Utils.validaModelCampos);
+			// this.model.on("error", Utils.validaModelCampos);
 		},
 
 		render: function() {
@@ -44,30 +43,32 @@ define([
 				confirmacaoSenha: $('input[name=confirmacaoSenha]').val()
 			});
 
-			if(this.model.isValid()) {
-				this.model.save(undefined, {
-					wait: true,
-					success: function(model, response) {
-						if(response.errors) {
-							// var msg = response.errors.message;
-							var errors = _.map(response.errors, function(val, prop) {
-								return val;
-							});
-							Utils.validaModelCampos(model, errors);
-						} else {
-							alert('Cadastrado com sucesso!');
-						}
-					},
-					error: function(model, error) {
-						if(error.statusText && error.statusText == 'error') {
-							Utils.mostraMensagem('Erro de conexão com o servidor.', TipoMsg.erro);
-						}
-						that.model.clear({
-							silent: true
+			this.model.save(undefined, {
+				wait: true,
+				success: function(model, response) {
+					if(response.errors) {
+						// var msg = response.errors.message;
+						var errors = _.map(response.errors, function(val, prop) {
+							return val;
 						});
+						Utils.validaModelCampos(model, errors);
+
+					}else if(response.err){
+						Utils.mostraMensagem(response.err, TipoMsg.erro);
+
+					} else {
+						alert('Cadastrado com sucesso!');
 					}
-				});
-			}
+				},
+				error: function(model, error) {
+					if(error.statusText && error.statusText == 'error') {
+						Utils.mostraMensagem('Erro de conexão com o servidor.', TipoMsg.erro);
+					}
+					that.model.clear({
+						silent: true
+					});
+				}
+			});
 
 			event.preventDefault();
 			event.stopPropagation();

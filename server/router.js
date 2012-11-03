@@ -1,5 +1,5 @@
 var sys = require('sys');
-var login = require('./login');
+var login = require('./login/login');
 
 module.exports = function(app) {
 	app.post('/login', login.autenticar);

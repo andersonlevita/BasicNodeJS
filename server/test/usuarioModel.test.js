@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
-var configDB = require('./../db/testConfig');
+var configDB = require('./../config/config')('test');
 var Usuario = require('./../usuario/usuarioModel');
 var should = require('should');
 var sys = require('sys');
-var DocumentObjectId = mongoose.Types.ObjectId
+var DocumentObjectId = mongoose.Types.ObjectId;
 
 mongoose.connect(configDB.host, configDB.database);
 

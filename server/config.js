@@ -1,3 +1,6 @@
+var mongoose = require('mongoose');
+var sys = require('sys');
+
 module.exports = function(app, express, dir) {
 	app.configure(function() {
 		app.use(express.methodOverride());
