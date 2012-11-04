@@ -19,11 +19,45 @@ module.exports = function(app) {
 		}
 
 		var usuarioModel = new UsuarioModel(usuarioPost);
-		usuarioModel.save(function(e) {
+		usuarioModel.save(function(e, o) {
 			if(e) res.send(e);
-			else res.send({
-				msg: 'OK'
-			});
+			else res.send(o);
+		});
+	});
+
+	app.get('/usuario', function(req, res) {
+		var usuarioModel = new UsuarioModel(usuarioPost);
+		usuarioModel.find({}, function(e, o) {
+			if(e) res.send(e);
+			else res.send(o);
+		});
+	});
+
+	app.get('/usuario/:id', function(req, res) {
+		var usuarioModel = new UsuarioModel(usuarioPost);
+		usuarioModel.findById(req.params.id, function(e, o) {
+			if(e) res.send(e);
+			else res.send(o);
+		});
+	});
+
+	app.put('/usuario/:id', function(req, res) {
+		var usuarioPost = req.body;
+
+		var usuarioModel = new UsuarioModel(usuarioPost);
+		usuarioModel.save(function(e, o) {
+			if(e) res.send(e);
+			else res.send(o);
+		});
+	});
+
+	app.delete('/usuario/:id', function(req, res) {		
+		var usuarioModel = new UsuarioModel(usuarioPost);
+		usuarioModel.findById(req.params.id, function(e, o) {
+			if(e) res.send(e);
+			else {
+				o.remove(function());
+			};
 		});
 	});
 }

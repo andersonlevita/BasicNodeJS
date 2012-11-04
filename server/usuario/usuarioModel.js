@@ -4,6 +4,8 @@ var Usuario = function() {
 		var crypt = require('./../seguranca/criptografia');
 
 		var setSenha = function(value) {
+				if (!value) return null;
+				
 				var salt = crypt.gerarSalt();
 				var senha = cryptPass(value + salt);
 

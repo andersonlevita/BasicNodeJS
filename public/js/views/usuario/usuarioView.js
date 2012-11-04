@@ -47,26 +47,25 @@ define([
 				wait: true,
 				success: function(model, response) {
 					if(response.errors) {
-						// var msg = response.errors.message;
 						var errors = _.map(response.errors, function(val, prop) {
 							return val;
 						});
 						Utils.validaModelCampos(model, errors);
 
-					}else if(response.err){
+					} else if(response.err) {
 						Utils.mostraMensagem(response.err, TipoMsg.erro);
 
 					} else {
-						alert('Cadastrado com sucesso!');
+						Utils.mostraMensagem('Usuário registrado com sucesso.', TipoMsg.sucesso);
 					}
 				},
 				error: function(model, error) {
 					if(error.statusText && error.statusText == 'error') {
 						Utils.mostraMensagem('Erro de conexão com o servidor.', TipoMsg.erro);
 					}
-					that.model.clear({
-						silent: true
-					});
+					// that.model.clear({
+					// 	silent: true
+					// });
 				}
 			});
 
