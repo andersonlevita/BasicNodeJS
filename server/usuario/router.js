@@ -51,12 +51,15 @@ module.exports = function(app) {
 		});
 	});
 
-	app.delete('/usuario/:id', function(req, res) {		
+	app.delete('/usuario/:id', function(req, res) {
 		var usuarioModel = new UsuarioModel(usuarioPost);
 		usuarioModel.findById(req.params.id, function(e, o) {
 			if(e) res.send(e);
 			else {
-				o.remove(function());
+				o.remove(function(e) {
+					if(e) res.send(e);
+					else res.send(o);
+				});
 			};
 		});
 	});
