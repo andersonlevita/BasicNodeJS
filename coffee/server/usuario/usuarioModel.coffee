@@ -1,4 +1,4 @@
-Usuario = ->
+Usuario = (()->
   mongoose = require("mongoose")
   Schema = require("mongoose").Schema
   crypt = require("./../seguranca/criptografia")
@@ -48,7 +48,6 @@ Usuario = ->
 
   Model = mongoose.model("Usuario", usuarioSchema)
   Model
-
-Usuario()
+)()
 
 module.exports = Usuario

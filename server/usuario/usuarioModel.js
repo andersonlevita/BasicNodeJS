@@ -2,7 +2,7 @@
 (function() {
   var Usuario;
 
-  Usuario = function() {
+  Usuario = (function() {
     var Model, Schema, crypt, cryptPass, mongoose, setSenha, usuarioSchema;
     mongoose = require("mongoose");
     Schema = require("mongoose").Schema;
@@ -71,9 +71,7 @@
     });
     Model = mongoose.model("Usuario", usuarioSchema);
     return Model;
-  };
-
-  Usuario();
+  })();
 
   module.exports = Usuario;
 

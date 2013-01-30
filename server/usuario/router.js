@@ -34,7 +34,8 @@
     });
     app.get('/usuario', function(req, res) {
       var usuarioModel;
-      usuarioModel = new UsuarioModel(usuarioPost);
+      usuarioModel = new UsuarioModel;
+      console.log("get usuario");
       return usuarioModel.find({}, function(e, o) {
         if (e) {
           return res.send(e);
@@ -43,43 +44,15 @@
         }
       });
     });
-    app.get('/usuario/:id', function(req, res) {
+    return app.get('/usuario/:id', function(req, res) {
       var usuarioModel;
-      usuarioModel = new UsuarioModel(usuarioPost);
+      usuarioModel = new UsuarioModel;
+      console.log("get usuario :id");
       return usuarioModel.findById(req.params.id, function(e, o) {
         if (e) {
           return res.send(e);
         } else {
           return res.send(o);
-        }
-      });
-    });
-    app.put('/usuario/:id', function(req, res) {
-      var usuarioModel, usuarioPost;
-      usuarioPost = req.body;
-      usuarioModel = new UsuarioModel(usuarioPost);
-      return usuarioModel.save(function(e, o) {
-        if (e) {
-          return res.send(e);
-        } else {
-          return res.send(o);
-        }
-      });
-    });
-    return app["delete"]('/usuario/:id', function(req, res) {
-      var usuarioModel;
-      usuarioModel = new UsuarioModel(usuarioPost);
-      return usuarioModel.findById(req.params.id, function(e, o) {
-        if (e) {
-          return res.send(e);
-        } else {
-          return o.remove(function(e) {
-            if (e) {
-              return res.send(e);
-            } else {
-              return res.send(o);
-            }
-          });
         }
       });
     });
