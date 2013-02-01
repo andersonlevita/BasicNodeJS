@@ -6,7 +6,7 @@ define ["jquery"
 	"models/usuario/usuarioModel"
 	"enums/tipoMensagem"
 ], ($, _, Backbone, Template, Utils, UsuarioModel, TipoMsg) ->
-	class Login extends Backbone.View
+	class UsuarioView extends Backbone.View
 		el: ".page"
 		store: null
 		model: new UsuarioModel
@@ -14,7 +14,6 @@ define ["jquery"
 		initialize: ->
 			# this.model.on("error", Utils.validaModelCampos);
 			@model.on "change", ()=>
-				console.log "changed"
 				@render
 
 		render: ->
@@ -26,11 +25,12 @@ define ["jquery"
 
 		fill: ()->
 			return unless @options.id
-			@model.set "id", @options.id
-			@model.fetch()
-
-			_.each @model.attributes, (value, key)->
-				$("input[name=#{key}]").val value
+			@model.set "_id", @options.id
+			@model.fetch
+				success: (model, response) =>
+					for key, value of model.attributes
+						continue if key is "senha"
+						$("input[name=#{key}]").val value
 
 		events:
 			"submit #frmUsuario": "submit"
@@ -46,13 +46,10 @@ define ["jquery"
 				senha: $("input[name=senha]").val()
 				confirmacaoSenha: $("input[name=confirmacaoSenha]").val()
 
-			event.preventDefault()
-			return
-
 			@model.save `undefined`,
 				wait: true
 				success: (model, response) ->
-					console.log "sucesso", model, response
+					console.log "sucesso save", model, response
 					# if response.errors
 					# 	errors = _.map(response.errors, (val, prop) ->
 					# 		val
@@ -64,7 +61,7 @@ define ["jquery"
 					# 	Utils.mostraMensagem "Usuário registrado com sucesso.", TipoMsg.sucesso
 
 				error: (model, error) ->
-					console.log "erro", model, error
+					console.log "erro", model, JSON.parse error.responseText
 					# Utils.mostraMensagem "Erro de conexão com o servidor.", TipoMsg.erro  if error.statusText and error.statusText is "error"
 
 			
@@ -74,4 +71,4 @@ define ["jquery"
 			event.preventDefault()
 			# event.stopPropagation()
 
-	Login
+	UsuarioView

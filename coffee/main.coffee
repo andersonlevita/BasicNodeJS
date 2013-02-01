@@ -5,7 +5,7 @@ app = express()
 
 require('./server/config') app, express, __dirname
 require('./server/router') app
-require('./server/usuario/router') app
+require('./server/usuario/usuarioController') app
 
 mongoose.connect config.host, config.database
 

@@ -4,30 +4,29 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(["jquery", "underscore", "backbone", "text!templates/usuario/cadastro.html", "utils", "models/usuario/usuarioModel", "enums/tipoMensagem"], function($, _, Backbone, Template, Utils, UsuarioModel, TipoMsg) {
-    var Login;
-    Login = (function(_super) {
+    var UsuarioView;
+    UsuarioView = (function(_super) {
 
-      __extends(Login, _super);
+      __extends(UsuarioView, _super);
 
-      function Login() {
-        return Login.__super__.constructor.apply(this, arguments);
+      function UsuarioView() {
+        return UsuarioView.__super__.constructor.apply(this, arguments);
       }
 
-      Login.prototype.el = ".page";
+      UsuarioView.prototype.el = ".page";
 
-      Login.prototype.store = null;
+      UsuarioView.prototype.store = null;
 
-      Login.prototype.model = new UsuarioModel;
+      UsuarioView.prototype.model = new UsuarioModel;
 
-      Login.prototype.initialize = function() {
+      UsuarioView.prototype.initialize = function() {
         var _this = this;
         return this.model.on("change", function() {
-          console.log("changed");
           return _this.render;
         });
       };
 
-      Login.prototype.render = function() {
+      UsuarioView.prototype.render = function() {
         var template, that;
         that = this;
         template = _.template(Template);
@@ -35,22 +34,34 @@
         return this.fill();
       };
 
-      Login.prototype.fill = function() {
+      UsuarioView.prototype.fill = function() {
+        var _this = this;
         if (!this.options.id) {
           return;
         }
-        this.model.set("id", this.options.id);
-        this.model.fetch();
-        return _.each(this.model.attributes, function(value, key) {
-          return $("input[name=" + key + "]").val(value);
+        this.model.set("_id", this.options.id);
+        return this.model.fetch({
+          success: function(model, response) {
+            var key, value, _ref, _results;
+            _ref = model.attributes;
+            _results = [];
+            for (key in _ref) {
+              value = _ref[key];
+              if (key === "senha") {
+                continue;
+              }
+              _results.push($("input[name=" + key + "]").val(value));
+            }
+            return _results;
+          }
         });
       };
 
-      Login.prototype.events = {
+      UsuarioView.prototype.events = {
         "submit #frmUsuario": "submit"
       };
 
-      Login.prototype.submit = function(event) {
+      UsuarioView.prototype.submit = function(event) {
         var that;
         that = this;
         $(".error").removeClass("error");
@@ -61,24 +72,22 @@
           senha: $("input[name=senha]").val(),
           confirmacaoSenha: $("input[name=confirmacaoSenha]").val()
         });
-        event.preventDefault();
-        return;
         this.model.save(undefined, {
           wait: true,
           success: function(model, response) {
-            return console.log("sucesso", model, response);
+            return console.log("sucesso save", model, response);
           },
           error: function(model, error) {
-            return console.log("erro", model, error);
+            return console.log("erro", model, JSON.parse(error.responseText));
           }
         });
         return event.preventDefault();
       };
 
-      return Login;
+      return UsuarioView;
 
     })(Backbone.View);
-    return Login;
+    return UsuarioView;
   });
 
 }).call(this);

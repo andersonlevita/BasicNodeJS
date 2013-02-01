@@ -6,6 +6,8 @@
     AppRouter = Backbone.Router.extend({
       routes: {
         "sucesso": "sucesso",
+        "usuarios": "usuarios",
+        "usuario": "usuario",
         "usuario/:id": "usuario",
         "*actions": "defaultAction"
       }
@@ -27,6 +29,13 @@
           viewPage = Vm.create(appView, "CadastroUsuarioView", ViewPage, {
             id: id
           });
+          return viewPage.render();
+        });
+      });
+      router.on("route:usuarios", function(id) {
+        return require(["views/usuario/usuariosView"], function(ViewPage) {
+          var viewPage;
+          viewPage = Vm.create(appView, "ListaUsuarioView", ViewPage);
           return viewPage.render();
         });
       });

@@ -6,7 +6,7 @@ Usuario = (()->
   setSenha = (value) ->
     return null  unless value
     salt = crypt.gerarSalt()
-    senha = cryptPass(value + salt)
+    senha = cryptPass value + salt
     @set "salt", salt
     senha
 
