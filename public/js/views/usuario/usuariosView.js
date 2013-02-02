@@ -23,7 +23,7 @@
         var _this = this;
         this.collection.fetch({
           success: function(collection, response) {
-            _this.collection.update(response);
+            _this.collection.reset(response);
             return _this.render();
           }
         });
@@ -38,10 +38,13 @@
           usuarios: this.collection.models
         }));
         that = this;
-        return $(".btn-delete").click(function() {
+        $(".btn-delete").click(function() {
           if ($(this).data("id")) {
             return that.collection.remove($(this).data("id"));
           }
+        });
+        return $("#btn-salvar").click(function() {
+          return that.collection.save();
         });
       };
 

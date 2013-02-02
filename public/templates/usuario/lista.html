@@ -13,11 +13,12 @@
 				<td><%= usuario.attributes.nome %></td>
 				<td><%= usuario.attributes.email %></td>
 				<td>
-					<a class="btn btn-mini btn-primary" href="#/usuario/<%= usuario.id %>">Editar</a>					
-					<a class="btn btn-mini btn-danger btn-delete" data-id="<%= usuario.id %>">Del</button>
+					<a class="btn btn-mini btn-primary" href="#/usuario/<%= usuario.id %>">Editar</a>
+					<a class="btn btn-mini btn-danger btn-delete" data-id="<%= usuario.id %>">Del</a>
 				</td>
 			</tr>
 			<%})%>
-		</tbody>
+		</tbody>		
 	</table>
+	<a class="btn btn-primary" id="btn-salvar">Salvar</a>					
 </div>

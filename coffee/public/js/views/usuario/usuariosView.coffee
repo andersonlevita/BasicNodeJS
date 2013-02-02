@@ -12,7 +12,7 @@ define ["jquery"
 		initialize: ->			
 			@collection.fetch
 				success: (collection, response) =>
-					@collection.update response					
+					@collection.reset response
 					@render()
 
 			@collection.on "remove", ()=>
@@ -23,7 +23,10 @@ define ["jquery"
 
 			that = @
 			$(".btn-delete").click ()->
-				if $(@).data("id")					
+				if $(@).data("id")
 					that.collection.remove $(@).data("id")
+
+			$("#btn-salvar").click ()->
+				that.collection.save()
 
 	UsuariosView

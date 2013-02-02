@@ -10,9 +10,8 @@
 
   module.exports = function(app) {
     app.post('/usuario', function(req, res) {
-      var usuarioModel, usuarioPost;
-      usuarioPost = req.body;
-      if (usuarioPost.senha !== usuarioPost.confirmacaoSenha) {
+      var usuarioModel;
+      if (req.body.senha !== req.body.confirmacaoSenha) {
         res.send(412, {
           errors: {
             confirmacaoSenha: {
@@ -23,7 +22,7 @@
         });
         return;
       }
-      usuarioModel = new UsuarioModel(usuarioPost);
+      usuarioModel = new UsuarioModel(req.body);
       return usuarioModel.save(function(e, o) {
         if (e) {
           return res.send(412, e);
@@ -51,15 +50,13 @@
       });
     });
     app.put('/usuario/:id', function(req, res) {
-      var usuarioPost;
-      usuarioPost = req.body;
       return UsuarioModel.findById(req.params.id, function(e, o) {
         if (e) {
           return res.send(412, e);
         } else {
-          o.nome = usuarioPost.nome;
-          o.email = usuarioPost.email;
-          o.senha = usuarioPost.senha;
+          o.nome = req.body.nome;
+          o.email = req.body.email;
+          o.senha = req.body.senha;
           return o.save(function(e, o) {
             if (e) {
               return res.send(412, e);
@@ -71,12 +68,17 @@
       });
     });
     return app["delete"]('/usuario/:id', function(req, res) {
-      console.log('entrou no delete');
       return UsuarioModel.findById(req.params.id, function(e, o) {
         if (e) {
           return res.send(412, e);
         } else {
-          return console.log('ok');
+          return o.remove(function(e, o) {
+            if (e) {
+              return res.send(412, e);
+            } else {
+              return res.send(o);
+            }
+          });
         }
       });
     });

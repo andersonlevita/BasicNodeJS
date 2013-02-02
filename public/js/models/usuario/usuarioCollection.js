@@ -17,9 +17,40 @@
 
       UsuarioCollection.prototype.url = "/usuarios";
 
-      UsuarioCollection.prototype.sync = function(method, model, options) {
-        UsuarioCollection.__super__.sync.call(this, method, model, options);
-        return console.log("sincroni...", method, model);
+      UsuarioCollection.prototype.modelsChanged = [];
+
+      UsuarioCollection.prototype.initialize = function() {
+        var _this = this;
+        this.bind("remove", function(model) {
+          return _this.modelsChanged.push({
+            method: "remove",
+            model: model
+          });
+        });
+        return this.bind("add", function(model) {
+          return _this.modelsChanged.push({
+            method: "add",
+            model: model
+          });
+        });
+      };
+
+      UsuarioCollection.prototype.save = function() {
+        var changed, _i, _len, _ref, _results;
+        _ref = this.modelsChanged;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          changed = _ref[_i];
+          if (changed.method === "remove") {
+            changed.model.destroy();
+          }
+          if (changed.method === "add") {
+            _results.push(changed.model.save());
+          } else {
+            _results.push(void 0);
+          }
+        }
+        return _results;
       };
 
       return UsuarioCollection;

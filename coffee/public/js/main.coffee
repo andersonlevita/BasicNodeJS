@@ -17,7 +17,7 @@ require ["views/app"
 	"router"
 	"vm"
 ], (AppView, Router, Vm) ->
-	appView = Vm.create({}, "AppView", AppView)
+	appView = Vm.create {}, "AppView", AppView
 	appView.render()
 	
 	Router.initialize appView: appView
