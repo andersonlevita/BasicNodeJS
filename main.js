@@ -14,7 +14,7 @@
 
   require('./server/router')(app);
 
-  require('./server/usuario/usuarioController')(app);
+  require('./server/controllers/usuarioController')(app);
 
   mongoose.connect(config.host, config.database);
 

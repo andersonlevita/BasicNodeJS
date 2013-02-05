@@ -5,13 +5,10 @@ require.config paths:
 	bootstrap: "libs/bootstrap/bootstrap.min"
 	underscore: "libs/underscore/underscore"
 	text: "libs/require/text"
-	utils: "libs/mylibs/utils"
 	templates: "../templates"
-
-# window.log = ->
-# 	log.history = log.history or []
-# 	log.history.push arguments_
-# 	console.log Array::slice.call(arguments_)  if @console
+	model: "models/baseModel"
+	messageHelper: "helpers/message"
+	utils: "mylibs/utils"
 
 require ["views/app"
 	"router"

@@ -24,7 +24,7 @@
         });
       });
       router.on("route:usuario", function(id) {
-        return require(["views/usuario/usuarioView"], function(ViewPage) {
+        return require(["views/usuario/cadastroView"], function(ViewPage) {
           var viewPage;
           viewPage = Vm.create(appView, "CadastroUsuarioView", ViewPage, {
             id: id
@@ -33,7 +33,7 @@
         });
       });
       router.on("route:usuarios", function(id) {
-        return require(["views/usuario/usuariosView"], function(ViewPage) {
+        return require(["views/usuario/listaView"], function(ViewPage) {
           var viewPage;
           viewPage = Vm.create(appView, "ListaUsuarioView", ViewPage);
           return viewPage.render();

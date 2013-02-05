@@ -1,19 +1,13 @@
 define ["underscore"
 	"backbone"
-], (_, Backbone) ->
-	class UsuarioModel extends Backbone.Model
-		idAttribute: "_id"
+	"model"
+], (_, Backbone, Model) ->
+	class UsuarioModel extends Model
 		defaults:
 			nome: ""
 			email: ""
 			senha: ""
 			confirmacaoSenha: ""
-		
-		# toJSON: function(){      
-		#   var attrs = Backbone.Model.prototype.toJSON.call(this);
-		#   delete attrs.confirmacaoSenha;
-		#   return attrs;
-		# },   
 		urlRoot: "/usuario"
 	
 	UsuarioModel

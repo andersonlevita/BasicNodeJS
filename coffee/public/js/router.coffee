@@ -16,13 +16,13 @@ define ["backbone", "vm"], (Backbone, Vm) ->
 				viewPage.render()
 
 		router.on "route:usuario", (id) ->
-			require ["views/usuario/usuarioView"], (ViewPage) ->
+			require ["views/usuario/cadastroView"], (ViewPage) ->
 				viewPage = Vm.create appView, "CadastroUsuarioView", ViewPage, 
 					id : id
 				viewPage.render()
 
 		router.on "route:usuarios", (id) ->
-			require ["views/usuario/usuariosView"], (ViewPage) ->
+			require ["views/usuario/listaView"], (ViewPage) ->
 				viewPage = Vm.create appView, "ListaUsuarioView", ViewPage
 				viewPage.render()
 

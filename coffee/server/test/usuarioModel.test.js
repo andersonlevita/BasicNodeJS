@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var configDB = require('./../config/config')('test');
-var Usuario = require('./../usuario/usuarioModel');
+var Usuario = require('./../models/usuarioModel');
 var should = require('should');
 var sys = require('sys');
 var DocumentObjectId = mongoose.Types.ObjectId;

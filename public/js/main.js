@@ -9,8 +9,10 @@
       bootstrap: "libs/bootstrap/bootstrap.min",
       underscore: "libs/underscore/underscore",
       text: "libs/require/text",
-      utils: "libs/mylibs/utils",
-      templates: "../templates"
+      templates: "../templates",
+      model: "models/baseModel",
+      messageHelper: "helpers/message",
+      utils: "mylibs/utils"
     }
   });
 
