@@ -5,7 +5,7 @@ define([
 	'text!templates/login/login.html',
 	'jStore',
 	'utils',
-	'enums/tipoMensagem'
+	'enums/messageType'
 	], function($, _, Backbone, TplLogin, jStore, Utils, TipoMsg) {
 	var Login = Backbone.View.extend({
 		el: '.page',
