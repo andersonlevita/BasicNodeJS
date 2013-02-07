@@ -15,21 +15,18 @@
 
       UsuariosView.prototype.el = ".page";
 
-      UsuariosView.prototype.collection = new UsuarioCollection;
-
       UsuariosView.prototype.template = _.template(Template);
 
       UsuariosView.prototype.initialize = function() {
         var _this = this;
+        this.collection = new UsuarioCollection;
         this.collection.fetch({
           success: function(collection, response) {
             _this.collection.reset(response);
             return _this.render();
           }
         });
-        return this.collection.on("remove", function() {
-          return _this.render();
-        });
+        return this.collection.on("remove", this.render, this);
       };
 
       UsuariosView.prototype.render = function() {

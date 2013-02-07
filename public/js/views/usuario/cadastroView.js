@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(["jquery", "underscore", "backbone", "text!templates/usuario/cadastro.html", "models/usuario/usuarioModel"], function($, _, Backbone, Template, UsuarioModel) {
+  define(["jquery", "underscore", "backbone", "text!templates/usuario/cadastro.html", "models/usuario/usuarioModel", "helpers/bindModelForm"], function($, _, Backbone, Template, UsuarioModel, BindModelForm) {
     var UsuarioView;
     UsuarioView = (function(_super) {
 
@@ -15,15 +15,10 @@
 
       UsuarioView.prototype.el = ".page";
 
-      UsuarioView.prototype.store = null;
-
-      UsuarioView.prototype.model = new UsuarioModel;
-
       UsuarioView.prototype.initialize = function() {
-        var _this = this;
-        return this.model.on("change", function() {
-          return _this.render;
-        });
+        this.model = new UsuarioModel;
+        this.modelForm = new BindModelForm(this.model);
+        return this.model.on("change", this.render, this);
       };
 
       UsuarioView.prototype.render = function() {
@@ -31,7 +26,7 @@
         that = this;
         template = _.template(Template);
         $(this.el).html(template());
-        return this.model.fetchForm(this.options.id, ["senha"]);
+        return this.modelForm.fetchForm(this.options.id, ["senha"]);
       };
 
       UsuarioView.prototype.events = {
@@ -39,7 +34,7 @@
       };
 
       UsuarioView.prototype.submit = function(event) {
-        this.model.saveForm();
+        this.modelForm.saveForm();
         return event.preventDefault();
       };
 

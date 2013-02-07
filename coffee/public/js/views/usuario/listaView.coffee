@@ -5,18 +5,17 @@ define ["jquery"
 	"models/usuario/usuarioCollection"
 ], ($, _, Backbone, Template, UsuarioCollection) ->
 	class UsuariosView extends Backbone.View
-		el: ".page"
-		collection: new UsuarioCollection
+		el: ".page"		
 		template: _.template Template
 		
-		initialize: ->			
+		initialize: ->
+			@collection = new UsuarioCollection
 			@collection.fetch
 				success: (collection, response) =>
 					@collection.reset response
 					@render()
 
-			@collection.on "remove", ()=>
-				@render()
+			@collection.on "remove", @render, @
 
 		render: ->
 			@$el.html @template usuarios : @collection.models
