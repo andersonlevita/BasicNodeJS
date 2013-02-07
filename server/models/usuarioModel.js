@@ -57,14 +57,10 @@
         return this.findOne({
           email: email
         }, function(e, o) {
-          if (e) {
-            if (error) {
-              return error(e);
-            }
-          } else {
-            if (success) {
-              return success(o);
-            }
+          if (e && error) {
+            return error(e);
+          } else if (success) {
+            return success(o);
           }
         });
       }

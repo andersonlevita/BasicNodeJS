@@ -1,6 +1,6 @@
-sys = require("sys")
-usuarioModel = require("./../usuario/usuarioModel")
-crypt = require("./../seguranca/criptografia")
+sys = require "sys"
+usuarioModel = require "./../usuario/usuarioModel"
+crypt = require "./../seguranca/criptografia"
 
 module.exports =
 	makeLogin: (req, res) ->
