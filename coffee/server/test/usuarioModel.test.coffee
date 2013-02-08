@@ -5,11 +5,16 @@ should = require "should"
 sys = require "sys"
 DocumentObjectId = mongoose.Types.ObjectId
 
-mongoose.connect configDB.host, configDB.database
+db = mongoose.connect configDB.host, configDB.database
+
+# db.connection.on "error", (e) ->
+# 	console.log e
 
 describe "Usuario Model", ->
-	after ->
-		mongoose.disconnect()
+	after (done)->
+		db.connection.db.dropDatabase () ->
+			db.connection.close () ->
+				done()
 
 	describe "Salvar", ->
 		testCount = 0
@@ -56,11 +61,9 @@ describe "Usuario Model", ->
 				usuarioAtual = u
 				done()
 
-
 		after (done) ->
 			Usuario.remove {}, ->
 				done()
-
 
 		it "Campos Requeridos", (done) ->
 			usuarioModel = new Usuario()
@@ -71,7 +74,6 @@ describe "Usuario Model", ->
 				should.exist e.errors.salt
 				should.not.exist u
 				done()
-
 
 		it "Validar Senha", ->
 			usuarioAtual.passValidate("senha123").should.ok
