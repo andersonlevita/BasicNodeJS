@@ -7,9 +7,12 @@
   login = require("./login/login");
 
   module.exports = function(app) {
-    app.post("/login", login.autenticar);
+    app.post("/login", login.login);
+    app.post("/logout", function(req, res) {
+      return login.logout(req, res);
+    });
     app.post("/ver", function(req, res) {
-      if (login.validarRequest(req)) {
+      if (login.requestValidate(req)) {
         return res.send({
           msg: "Sessão válida"
         });
