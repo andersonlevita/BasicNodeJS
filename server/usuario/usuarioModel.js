@@ -6,13 +6,13 @@
     var Model, Schema, crypt, cryptPass, mongoose, setSenha, usuarioSchema;
     mongoose = require("mongoose");
     Schema = require("mongoose").Schema;
-    crypt = require("./../seguranca/criptografia");
+    crypt = require("./../security/cryptography");
     setSenha = function(value) {
       var salt, senha;
       if (!value) {
         return null;
       }
-      salt = crypt.gerarSalt();
+      salt = crypt.saltGenerate();
       senha = cryptPass(value + salt);
       this.set("salt", salt);
       return senha;

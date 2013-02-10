@@ -2,18 +2,23 @@ mongoose = require "mongoose"
 configDB = require("./../config/config") "test"
 Usuario = require "./../models/usuarioModel"
 should = require "should"
-sys = require "sys"
 DocumentObjectId = mongoose.Types.ObjectId
 
-db = mongoose.connect configDB.host, configDB.database
+db = undefined
 
-# db.connection.on "error", (e) ->
-# 	console.log e
+mongoose.connection.on "error", (e) ->
+	console.log "Conexão: #{e}"
 
 describe "Usuario Model", ->
-	after (done)->
+
+	before (done) ->
+		db = mongoose.connect configDB.host, configDB.database
+		Usuario.remove {}, ->
+			done()
+
+	after (done) ->
 		db.connection.db.dropDatabase () ->
-			db.connection.close () ->
+			db.connection.close ->
 				done()
 
 	describe "Salvar", ->

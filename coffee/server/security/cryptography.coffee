@@ -4,22 +4,21 @@ algorithmCipher = "aes256" # or any other algorithm supported by OpenSSL
 keyCipher = "gGHF45$%fgfsdD&*l13kj13@#s859df__jh5k"
 
 module.exports =
-	sha1: (str, iteracoes) ->
+	sha1: (str, iterations) ->
 		str = str.toString()  unless typeof str is "string"
-		iteracoes = 0  if typeof iteracoes is "undefined"
-		shaUm = crypto.createHash("sha1").update(str).digest("HEX")
+		iterations = 0  if typeof iterations is "undefined"
+		shaOne = crypto.createHash("sha1").update(str).digest "HEX"
 		i = 0
 
-		while i < iteracoes
-			shaUm = crypto.createHash("sha1").update(shaUm).digest("HEX")
+		while i < iterations
+			shaOne = crypto.createHash("sha1").update(shaOne).digest "HEX"
 			i++
-		shaUm
+		shaOne
 
-	gerarSalt: ->
-		salt = @sha1(new Date(), 10)
-		salt
+	saltGenerate: ->
+		@sha1(new Date(), 10)
 
-	gerarSessionToken: (req) ->
+	sessionTokenGenerate: (req) ->
 		ip_address = null
 		try
 			ip_address = req.headers["x-real-ip"] #x-forwarded-for
@@ -31,12 +30,9 @@ module.exports =
 		
 		#Verificar melhores credenciais.
 		keys = [req.headers.origin, req.headers["user-agent"], req.headers.referer]
-		ret = ""
-		i = 0
+		ret = ""		
+		ret += key for key in keys
 
-		while i < keys.length
-			ret += keys[i]
-			i++
 		@sha1 ret
 
 	cifrar: (str) ->

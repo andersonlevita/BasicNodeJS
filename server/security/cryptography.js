@@ -11,29 +11,27 @@
   keyCipher = "gGHF45$%fgfsdD&*l13kj13@#s859df__jh5k";
 
   module.exports = {
-    sha1: function(str, iteracoes) {
-      var i, shaUm;
+    sha1: function(str, iterations) {
+      var i, shaOne;
       if (typeof str !== "string") {
         str = str.toString();
       }
-      if (typeof iteracoes === "undefined") {
-        iteracoes = 0;
+      if (typeof iterations === "undefined") {
+        iterations = 0;
       }
-      shaUm = crypto.createHash("sha1").update(str).digest("HEX");
+      shaOne = crypto.createHash("sha1").update(str).digest("HEX");
       i = 0;
-      while (i < iteracoes) {
-        shaUm = crypto.createHash("sha1").update(shaUm).digest("HEX");
+      while (i < iterations) {
+        shaOne = crypto.createHash("sha1").update(shaOne).digest("HEX");
         i++;
       }
-      return shaUm;
+      return shaOne;
     },
-    gerarSalt: function() {
-      var salt;
-      salt = this.sha1(new Date(), 10);
-      return salt;
+    saltGenerate: function() {
+      return this.sha1(new Date(), 10);
     },
-    gerarSessionToken: function(req) {
-      var i, ip_address, keys, ret;
+    sessionTokenGenerate: function(req) {
+      var ip_address, key, keys, ret, _i, _len;
       ip_address = null;
       try {
         ip_address = req.headers["x-real-ip"];
@@ -42,10 +40,9 @@
       }
       keys = [req.headers.origin, req.headers["user-agent"], req.headers.referer];
       ret = "";
-      i = 0;
-      while (i < keys.length) {
-        ret += keys[i];
-        i++;
+      for (_i = 0, _len = keys.length; _i < _len; _i++) {
+        key = keys[_i];
+        ret += key;
       }
       return this.sha1(ret);
     },

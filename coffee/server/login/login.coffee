@@ -1,7 +1,8 @@
 sys = require "sys"
 usuarioModel = require "./../usuario/usuarioModel"
-crypt = require "./../seguranca/criptografia"
+crypt = require "./../security/cryptography"
 responseHelper = require "./../helpers/response"
+messageHelper = require "./../helpers/message"
 
 module.exports =
 	login: (req, res) ->
@@ -9,8 +10,7 @@ module.exports =
 		senha = req.body.senha
 		usuarioModel.findByEmail email, ((usuario) ->
 			unless usuario			
-				console.log "Usuário não encontrado."
-				responseHelper.sendError res, "Usuário não encontrado."
+				responseHelper.sendError res, messageHelper.loginFail
 
 			else if usuario.passValidate(senha)
 				sessaoUsuario =
@@ -18,29 +18,21 @@ module.exports =
 					userID: usuario.id
 					userName: usuario.nome
 					userMail: usuario.email
-					token: crypt.gerarSessionToken(req)
+					token: crypt.sessionTokenGenerate(req)
 
 				req.session.user = sessaoUsuario
-				console.log "Autenticado."
 				res.send 200
 			else
-				console.log "Senha não corresponde."
-				responseHelper.sendError res, "Senha não corresponde."
+				responseHelper.sendError res, messageHelper.loginFail
 
 		), (erro) ->
-			console.log erro
 			responseHelper.sendError res, erro
 
 	requestValidate: (req) ->
-		sys.puts sys.inspect req.session.user
 		return false  unless req.session.user
-		return crypt.gerarSessionToken(req) is req.session.user.token
+		return crypt.sessionTokenGenerate(req) is req.session.user.token
 
 	logout: (req, res) ->
-		console.log "Entrou no logout"
 		return unless @requestValidate req
-		sys.puts sys.inspect req.session.user
 		delete req.session.user
-		sys.puts sys.inspect req.session.user
-		console.log "Realizou logout"
 		res.send 200
