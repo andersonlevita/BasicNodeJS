@@ -6,6 +6,8 @@ messageHelper = require "./../helpers/message"
 
 module.exports =
 	login: (req, res) ->
+		# sys.puts sys.inspect req
+
 		email = req.body.email
 		senha = req.body.senha
 		usuarioModel.findByEmail email, ((usuario) ->

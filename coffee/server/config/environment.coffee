@@ -1,6 +1,6 @@
-ambient = "development"
+environment = "development"
 
-module.exports = (pAmbient) ->
+module.exports = (pEnvironment) ->
 	amb =
 		test:
 			host: "localhost"
@@ -14,5 +14,5 @@ module.exports = (pAmbient) ->
 			host: "localhost"
 			database: "BasicNodeJS"
 
-	ambient = pAmbient  if pAmbient
-	amb[ambient]
+	environment = pEnvironment  if pEnvironment
+	amb[environment]

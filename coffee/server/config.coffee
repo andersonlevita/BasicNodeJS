@@ -1,6 +1,3 @@
-mongoose = require("mongoose")
-sys = require("sys")
-
 module.exports = (app, express, dir) ->
   app.configure ->
     app.use express.methodOverride()

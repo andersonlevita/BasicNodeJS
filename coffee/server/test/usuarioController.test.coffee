@@ -1,31 +1,58 @@
-# mongoose = require "mongoose"
-# configDB = require("./../config/config") "test"
-# Usuario = require "./../models/usuarioModel"
-# should = require "should"
-# sys = require "sys"
-# DocumentObjectId = mongoose.Types.ObjectId
+mongoose = require "mongoose"
+configDB = require("./../config/environment") "test"
+Usuario = require "./../models/usuarioModel"
+Login = require "./../login/login"
+msgHelper = require "./../helpers/message"
+should = require "should"
 
-# mongoose.connect configDB.host, configDB.database
+db = undefined
 
+mongoose.connection.on "error", (e) ->
+	console.log "Conexão: #{e}"
 
+express = require "express"
+request = require "./support/http"
+app = require "./../../"
 
+describe "app", ->
+	describe ".request", ->		
+		user =
+			nome: "Usuario Login Teste"
+			email: "login@com.br"
+			senha: "login"
 
-# express = require "./../../"
-# request = require "./support/http"
+		before (done) ->
+			db = mongoose.connect configDB.host, configDB.database
+			Usuario.remove {}, ->
+				usuarioModel = new Usuario user
+				usuarioModel.save (e, u) ->
+					should.not.exist e
+					should.exist u
+					# http.createServer app, done
+					done()
 
-# describe "app", ->
-# 	describe ".request", ->
-# 		it "should extend the request prototype", (done) ->
-# 			app = express()
-# 			app.request.querystring = ->
-# 				require("url").parse(@url).query
+		after (done) ->
+			db.connection.db.dropDatabase () ->
+				db.connection.close ->
+					done()
 
-# 			app.use (req, res) ->
-# 				res.end req.querystring()
+		it "should extend the request prototype", (done) ->
+			# app = express()
+			# app.enable 'trust proxy'
+			# app.use (req, res, next) ->
+			# 	res.send req.ip
 
-# 			usuarios = request(app).get("/usuarios")
-# 			console.log JSON.stringify usuarios
-# 			usuarios.expect "name=tobi", done
+			# request(app)
+			# .get('/')
+			# .set('X-Forwarded-For', 'client, p1, p2')
+			# .expect('127.0.0.1', done)
+
+			request()
+				.post('/login')
+				.set('Content-Type','application/json')
+				.write(JSON.stringify({ email: 'login@com.br', senha: 'login' }))
+				.expect(200, done)
+
 
 
 

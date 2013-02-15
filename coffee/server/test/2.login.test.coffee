@@ -1,5 +1,5 @@
 mongoose = require "mongoose"
-configDB = require("./../config/config") "test"
+configDB = require("./../config/environment") "test"
 Usuario = require "./../models/usuarioModel"
 Login = require "./../login/login"
 msgHelper = require "./../helpers/message"
@@ -28,7 +28,6 @@ describe "Login", ->
 
 	after (done) ->
 		db.connection.db.dropDatabase () ->
-			console.log "dropado"
 			db.connection.close ->
 				done()
 

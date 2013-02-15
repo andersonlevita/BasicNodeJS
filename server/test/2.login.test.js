@@ -4,7 +4,7 @@
 
   mongoose = require("mongoose");
 
-  configDB = require("./../config/config")("test");
+  configDB = require("./../config/environment")("test");
 
   Usuario = require("./../models/usuarioModel");
 
@@ -43,7 +43,6 @@
     });
     after(function(done) {
       return db.connection.db.dropDatabase(function() {
-        console.log("dropado");
         return db.connection.close(function() {
           return done();
         });
