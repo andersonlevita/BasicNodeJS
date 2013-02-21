@@ -1,19 +1,18 @@
+# login = require "./../login/login"
 sys = require "sys"
-usuarioModel = require "./../usuario/usuarioModel"
-crypt = require "./../security/cryptography"
+usuarioModel = require "./../models/usuarioModel"
+crypt = require "./../helpers/cryptography"
 responseHelper = require "./../helpers/response"
 messageHelper = require "./../helpers/message"
+loginHelper = require "./../helpers/login"
 
-module.exports =
-	login: (req, res) ->
-		# sys.puts sys.inspect req
-
+module.exports = (app) ->
+	app.post "/login", (req, res) ->
 		email = req.body.email
 		senha = req.body.senha
 		usuarioModel.findByEmail email, ((usuario) ->
 			unless usuario			
 				responseHelper.sendError res, messageHelper.loginFail
-
 			else if usuario.passValidate(senha)
 				sessaoUsuario =
 					sID: req.sessionID
@@ -21,20 +20,16 @@ module.exports =
 					userName: usuario.nome
 					userMail: usuario.email
 					token: crypt.sessionTokenGenerate(req)
-
 				req.session.user = sessaoUsuario
 				res.send 200
 			else
 				responseHelper.sendError res, messageHelper.loginFail
-
 		), (erro) ->
 			responseHelper.sendError res, erro
 
-	requestValidate: (req) ->
-		return false  unless req.session.user
-		return crypt.sessionTokenGenerate(req) is req.session.user.token
-
-	logout: (req, res) ->
-		return unless @requestValidate req
-		delete req.session.user
-		res.send 200
+	app.post "/logout", (req, res) ->
+		unless loginHelper.requestValidate req
+			responseHelper.sendError res, messageHelper.logoutFail
+		else
+			delete req.session.user
+			res.send 200

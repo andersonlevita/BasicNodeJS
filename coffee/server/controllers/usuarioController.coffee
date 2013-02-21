@@ -1,6 +1,4 @@
 UsuarioModel = require './../models/usuarioModel'
-sys = require 'sys'
-login = require './../login/login'
 resHelper = require './../helpers/response'
 
 module.exports = (app) ->

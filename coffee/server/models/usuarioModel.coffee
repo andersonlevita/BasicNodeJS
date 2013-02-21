@@ -1,11 +1,11 @@
 Usuario = (()->
 	mongoose = require "mongoose"
 	Schema = require("mongoose").Schema
-	crypt = require "./../seguranca/criptografia"
+	crypt = require "./../helpers/cryptography"
 
 	setSenha = (value) ->
 		return null  unless value
-		salt = crypt.gerarSalt()
+		salt = crypt.saltGenerate()
 		senha = cryptPass value + salt
 		@set "salt", salt
 		senha
