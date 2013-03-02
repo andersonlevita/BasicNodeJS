@@ -2,10 +2,9 @@ define ["jquery"
 "underscore"
 "backbone"
 "text!templates/login/login.html"
-"jStore"
 "helpers/message"
 "enums/messageType"
-], ($, _, Backbone, LoginTemplate, jStore, MessageHelper, TipoMsg) ->
+], ($, _, Backbone, LoginTemplate, MessageHelper, TipoMsg) ->
 	class Login extends Backbone.View
 
 		el: ".page"
@@ -13,7 +12,6 @@ define ["jquery"
 		template: _.template LoginTemplate
 
 		initialize: ->
-			@store = jStore.store()
 
 		render: ->
 			@$el.html @template()

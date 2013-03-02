@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(["underscore", "backbone", "models/usuario/usuarioModel"], function(_, Backbone, UsuarioModel) {
+  define(["underscore", "backbone", "collection", "models/usuario/usuarioModel"], function(_, Backbone, BaseCollection, UsuarioModel) {
     var UsuarioCollection;
     UsuarioCollection = (function(_super) {
 
@@ -17,45 +17,9 @@
 
       UsuarioCollection.prototype.url = "/usuarios";
 
-      UsuarioCollection.prototype.modelsChanged = [];
-
-      UsuarioCollection.prototype.initialize = function() {
-        var _this = this;
-        this.bind("remove", function(model) {
-          return _this.modelsChanged.push({
-            method: "remove",
-            model: model
-          });
-        });
-        return this.bind("add", function(model) {
-          return _this.modelsChanged.push({
-            method: "add",
-            model: model
-          });
-        });
-      };
-
-      UsuarioCollection.prototype.save = function() {
-        var changed, _i, _len, _ref, _results;
-        _ref = this.modelsChanged;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          changed = _ref[_i];
-          if (changed.method === "remove") {
-            changed.model.destroy();
-          }
-          if (changed.method === "add") {
-            _results.push(changed.model.save());
-          } else {
-            _results.push(void 0);
-          }
-        }
-        return _results;
-      };
-
       return UsuarioCollection;
 
-    })(Backbone.Collection);
+    })(BaseCollection);
     return UsuarioCollection;
   });
 

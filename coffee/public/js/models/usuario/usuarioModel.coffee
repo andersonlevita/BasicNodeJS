@@ -1,8 +1,8 @@
 define ["underscore"
 	"backbone"
 	"model"
-], (_, Backbone, Model) ->
-	class UsuarioModel extends Model
+], (_, Backbone, BaseModel) ->
+	class UsuarioModel extends BaseModel
 		defaults:
 			nome: ""
 			email: ""

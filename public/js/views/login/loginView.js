@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(["jquery", "underscore", "backbone", "text!templates/login/login.html", "jStore", "helpers/message", "enums/messageType"], function($, _, Backbone, LoginTemplate, jStore, MessageHelper, TipoMsg) {
+  define(["jquery", "underscore", "backbone", "text!templates/login/login.html", "helpers/message", "enums/messageType"], function($, _, Backbone, LoginTemplate, MessageHelper, TipoMsg) {
     var Login;
     Login = (function(_super) {
 
@@ -17,9 +17,7 @@
 
       Login.prototype.template = _.template(LoginTemplate);
 
-      Login.prototype.initialize = function() {
-        return this.store = jStore.store();
-      };
+      Login.prototype.initialize = function() {};
 
       Login.prototype.render = function() {
         return this.$el.html(this.template());

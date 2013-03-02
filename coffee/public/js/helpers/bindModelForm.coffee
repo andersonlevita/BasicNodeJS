@@ -1,7 +1,7 @@
 define ["underscore"
 	"backbone"
 	"jquery"
-	"messageHelper"
+	"helpers/message"
 	"enums/messageType"
 ], (_, Backbone, $, MsgHelper, MsgType) ->
 	

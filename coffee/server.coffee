@@ -1,6 +1,4 @@
 module.exports = (callback) ->
-	# mongoose = require 'mongoose'
-	# environmentConf = require('./server/config/environment')(environment)
 	express = require 'express'
 	app = express()
 
@@ -10,11 +8,3 @@ module.exports = (callback) ->
 	require('./server/controllers/usuarioController') app
 
 	callback(app)
-
-	# mongoose.connect environmentConf.host, environmentConf.database
-
-	# app.get '/', (req, res) ->
-	# 	res.redirect '/index.html'
-
-	# app.listen port
-	# console.log "Rodando na porta 3000"

@@ -2,7 +2,7 @@
 (function() {
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  define(["underscore", "backbone", "jquery", "messageHelper", "enums/messageType"], function(_, Backbone, $, MsgHelper, MsgType) {
+  define(["underscore", "backbone", "jquery", "helpers/message", "enums/messageType"], function(_, Backbone, $, MsgHelper, MsgType) {
     var BindModelForm;
     BindModelForm = (function() {
 
