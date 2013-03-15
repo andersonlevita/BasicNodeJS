@@ -40,13 +40,9 @@
         return responseHelper.sendError(res, erro);
       });
     });
-    return app.post("/logout", function(req, res) {
-      if (!loginHelper.requestValidate(req)) {
-        return responseHelper.sendError(res, messageHelper.logoutFail);
-      } else {
-        delete req.session.user;
-        return res.send(200);
-      }
+    return app.post("/logout", loginHelper.logged, function(req, res) {
+      delete req.session.user;
+      return res.send(200);
     });
   };
 

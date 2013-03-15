@@ -27,9 +27,6 @@ module.exports = (app) ->
 		), (erro) ->
 			responseHelper.sendError res, erro
 
-	app.post "/logout", (req, res) ->
-		unless loginHelper.requestValidate req
-			responseHelper.sendError res, messageHelper.logoutFail
-		else
-			delete req.session.user
-			res.send 200
+	app.post "/logout", loginHelper.logged, (req, res) ->
+		delete req.session.user
+		res.send 200

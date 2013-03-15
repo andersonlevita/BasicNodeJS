@@ -8,6 +8,9 @@
     sendError: function(response, error) {
       return response.send(412, error);
     },
+    authenticationError: function(response) {
+      return response.send(401);
+    },
     defaultResponse: function(response, error, object) {
       if (error) {
         return response.send(412, error);

@@ -29,9 +29,11 @@ module.exports =
 		# sys.puts(sys.inspect(req.headers));
 		
 		#Verificar melhores credenciais.
-		keys = [req.headers.origin, req.headers["user-agent"], req.headers.referer]
+		keys = [ip_address, req.headers.host, req.headers["user-agent"], req.headers.referer]
 		ret = ""		
 		ret += key for key in keys
+
+		# console.log "ret: #{ret}"
 
 		@sha1 ret
 

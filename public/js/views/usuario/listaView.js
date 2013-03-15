@@ -24,6 +24,9 @@
           success: function(collection, response) {
             _this.collection.reset(response);
             return _this.render();
+          },
+          error: function(e) {
+            return alert(JSON.stringify(e));
           }
         });
         return this.collection.on("remove", this.render, this);

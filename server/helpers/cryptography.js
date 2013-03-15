@@ -38,7 +38,7 @@
       } catch (error) {
         ip_address = req.connection.remoteAddress;
       }
-      keys = [req.headers.origin, req.headers["user-agent"], req.headers.referer];
+      keys = [ip_address, req.headers.host, req.headers["user-agent"], req.headers.referer];
       ret = "";
       for (_i = 0, _len = keys.length; _i < _len; _i++) {
         key = keys[_i];

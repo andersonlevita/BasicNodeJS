@@ -14,6 +14,8 @@ define ["jquery"
 				success: (collection, response) =>
 					@collection.reset response
 					@render()
+				error: (e) ->
+					alert JSON.stringify e
 
 			@collection.on "remove", @render, @
 

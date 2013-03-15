@@ -4,6 +4,9 @@ module.exports =
 	sendError: (response, error) ->
 		response.send 412, error
 
+	authenticationError: (response) ->
+		response.send 401
+
 	defaultResponse: (response, error, object) ->
 		# sys.puts sys.inspect response
 		# sys.puts sys.inspect error

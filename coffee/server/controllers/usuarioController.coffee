@@ -1,9 +1,10 @@
 UsuarioModel = require './../models/usuarioModel'
 resHelper = require './../helpers/response'
+loginHelper = require './../helpers/login'
 
 module.exports = (app) ->
 
-	app.get '/usuarios', (req, res) ->
+	app.get '/usuarios', loginHelper.logged, (req, res) ->
 		UsuarioModel.find {}, (e, o) ->
 			resHelper.defaultResponse res, e, o
 
