@@ -15,6 +15,7 @@
 
 # Windows
 Thumbs.db
+*.bat
 
 # Vim
 .*.sw[a-z]
